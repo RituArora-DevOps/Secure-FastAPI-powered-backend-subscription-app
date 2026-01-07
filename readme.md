@@ -13,6 +13,7 @@ psycopg2-binary → PostgreSQL driver
 
 python.exe -m pip install --upgrade pip
 pip install passlib[bcrypt] python-jose stripe
+pip install python-dateutil
 
 mkdir -p subscription_app/app/{models,schemas,routes,services}
 touch subscription_app/app/main.py
@@ -20,8 +21,20 @@ touch subscription_app/app/database.py
 touch subscription_app/requirements.txt
 touch subscription_app/.env
 
-uvicorn app.main:app --reload
+pip install -r requirements.txt
+python -m uvicorn app.main:app --reload
 
+pip install passlib[bcrypt]
+python -c "import secrets; print(secrets.token_hex(32))"
+
+pip install "python-jose[cryptography]"
+ pip show python-jose
+
+# for testing 
+pip install pytest pytest-asyncio httpx
+pip install pytest-cov
+
+pytest --cov=app
 =====================================
 Separation of concerns:
 

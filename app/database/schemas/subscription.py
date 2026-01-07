@@ -1,9 +1,11 @@
 from datetime import datetime 
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+from .plan import Plan
 
 # These are the core fields needed for any subscription, whether creating or reading
 class SubscriptionBase(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     plan_id: int
 
 # For creating a new subscription
@@ -20,6 +22,4 @@ class Subscription(SubscriptionBase):
     end_date: Optional[datetime]
     is_active: bool
 
-
-    class Config:
-        orm_mode = True # Tells Pydantic to work with ORM objects and read data from SQLAlchemy objects
+    plan: Optional[Plan] = None
