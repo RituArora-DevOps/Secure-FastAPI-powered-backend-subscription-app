@@ -88,3 +88,15 @@ def test_delete_user_success(client):
     get_response = client.get(f"/users/{user_id}")
     assert get_response.status_code == 404
     assert get_response.json() == {"detail": "User not found"}
+
+def test_admin_get_all_subscriptions(client, admin_token):
+    headers = {"Authorization": f"Bearer {admin_token}"}
+    response = client.get("/subscriptions/all", headers=headers)
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+
+def test_user_cannot_get_all_subscriptions(client, user_token):
+    # This checks your 'get_current_admin' dependency
+    headers = {"Authorization": f"Bearer {user_token}"}
+    response = client.get("/subscriptions/all", headers=headers)
+    assert response.status_code == 403

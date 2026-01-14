@@ -34,7 +34,9 @@ pip install "python-jose[cryptography]"
 pip install pytest pytest-asyncio httpx
 pip install pytest-cov
 
-pytest --cov=app
+pytest --cov=app tests/
+pytest --cov=app --cov-report=term-missing
+pytest --cov=app --cov-report=html
 =====================================
 Separation of concerns:
 

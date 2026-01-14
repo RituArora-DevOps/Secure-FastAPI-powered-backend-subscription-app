@@ -13,6 +13,13 @@ router = APIRouter(prefix="/plans", tags=["plans"])
 def read_plans(db: Session = Depends(get_db)):
     return plan_crud.get_plans(db)
 
+@router.get("/{plan_id}", response_model=plan_schemas.Plan)
+def read_plan(plan_id: int, db: Session = Depends(get_db)):
+    db_plan = plan_crud.get_plan(db, plan_id=plan_id)
+    if db_plan is None:
+        raise HTTPException(status_code=404, detail="Plan not found")
+    return db_plan
+
 @router.post("/", response_model=plan_schemas.Plan)
 def create_plan(
     plan: plan_schemas.PlanCreate, 

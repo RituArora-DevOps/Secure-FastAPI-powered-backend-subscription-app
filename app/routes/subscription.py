@@ -5,6 +5,7 @@ from ..crud import subscriptions as sub_crud
 from ..database.schemas import subscription as sub_schemas
 from .auth import get_current_user, get_current_admin
 from ..database.models.user import User
+from ..database.models.subscription import Subscription as sub_model
 
 router = APIRouter(prefix="/subscriptions", tags=["subscriptions"])
 
@@ -14,6 +15,13 @@ def create_subscription(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+
+    # 1. Check if they have an active sub (Duplicate check)
+    existing_sub = db.query(sub_model).filter(sub_model.user_id==current_user.id, sub_model.is_active==True).first()
+    if existing_sub:
+        raise HTTPException(status_code=400, detail=f"User with ID {current_user.id} already has an active subscription")
+    
+    # Now call the CRUD
     # Use current_user.id instead of passing it in the URL
     result = sub_crud.create_subscription(db, sub, current_user.id)
     if result is None:

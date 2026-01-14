@@ -39,9 +39,6 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     Returns:
         str: The encoded JWT token as a string.
     """
-
-    from datetime import datetime, timedelta
-
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=15))
     to_encode.update({"exp": expire})
@@ -113,7 +110,7 @@ def get_current_user(token: str = Depends(oauth2_schema), db: Session = Depends(
 
 # --- Protected route example ---
 @router.get("/me")
-def read_users_me(current_user: str = Depends(get_current_user)):
+def read_users_me(current_user: User = Depends(get_current_user)):
     """Protected route to get the current user's information.
     Args:
         current_user (str, optional): The current user extracted from the token. Defaults to Depends(get_current_user).

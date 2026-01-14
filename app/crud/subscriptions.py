@@ -6,6 +6,7 @@ from ..database import models, schemas
 def create_subscription(db: Session, sub: schemas.SubscriptionCreate, user_id: int):
     # 1. Validate plan ID
     plan = db.query(models.Plan).filter(models.Plan.id == sub.plan_id, models.Plan.is_active == True).first()
+
     if not plan:
         return None # The route handles the 404/400 error
     

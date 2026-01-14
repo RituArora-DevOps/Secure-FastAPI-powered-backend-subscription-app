@@ -12,9 +12,19 @@ router = APIRouter(prefix="/users", tags=["users"])
 # Here we will define user-related endpoints (e.g., create user, get user, update user, delete user)
 # Each endpoint will interact with the database via SQLAlchemy models and sessions
 # and will use Pydantic schemas for request validation and response formatting
-
+# Handles user registration route
 @router.post("/", response_model=user_schema.User, status_code=201)
-def create_user(user: user_schema.UserCreate, db: Session = Depends(connection.get_db)):
+def register_user(user: user_schema.UserCreate, db: Session = Depends(connection.get_db)):
+    """
+    Register a new user in the system.
+    Checks if the email is already taken before creating.
+    """
+    # 1. Check for duplicate email
+    existing_user = user_crud.get_user_by_email(db, email=user.email)
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    # 2. Call the CRUD
     return user_crud.create_user(db, user)
 
 @router.get("/{user_id}", response_model=user_schema.User)
