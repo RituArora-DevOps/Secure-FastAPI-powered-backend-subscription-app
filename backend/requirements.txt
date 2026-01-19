@@ -1,0 +1,27 @@
+# --- Core API & Server ---
+fastapi
+uvicorn[standard]
+pydantic[email]
+python-multipart
+python-dotenv
+python-dateutil
+
+# --- Database & Migrations ---
+sqlalchemy
+psycopg2-binary
+alembic
+
+# --- Security & Auth ---
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+python-dotenv
+
+# --- Task Queue & Caching ---
+redis
+celery
+
+# --- Testing (The 90% Coverage Suite) ---
+pytest
+pytest-cov
+httpx

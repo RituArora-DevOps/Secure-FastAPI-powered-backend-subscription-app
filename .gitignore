@@ -1,51 +1,22 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.pkl
-*.egg
-*.egg-info/
-dist/
-build/
-.eggs/
+# --- Backend / Python ---
+backend/__pycache__/
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/venv/              
+backend/.venv/
+backend/*.db
 
-# Virtual environment
-venv/
-env/
-.venv/
+# --- Frontend / React ---
+frontend/node_modules/     
+frontend/dist/             
+frontend/.eslintcache
+frontend/npm-debug.log*
 
-# VSCode
-.vscode/
-*.code-workspace
-
-# PyCharm
-.idea/
-
-# Logs
-*.log
-
-# Databases
-*.sqlite3
-*.db
-
-# Environment variables / secrets
+# --- Environment & Tools ---
 .env
 .env.*
-
-# Docker
-*.pid
-*.seed
-*.bak
-*.tmp
-*.swp
-docker-compose.override.yml
-
-# Migrations (if using Alembic)
-alembic/versions/*.pyc
-alembic/versions/*.pyo
-alembic/versions/__pycache__/
-
-# OS
+.vscode/
+.idea/
 .DS_Store
-Thumbs.db
+Notes.txt
